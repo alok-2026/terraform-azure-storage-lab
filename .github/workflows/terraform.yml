@@ -1,4 +1,35 @@
-name: Terraform CI/CD Pipeline
+name: Terraform Dev Deployment
+
+on:
+push:
+branches:
+- main
+
+jobs:
+terraform:
+runs-on: ubuntu-latest
+
+```
+defaults:
+  run:
+    working-directory: .github/environments/dev
+
+steps:
+  - name: Checkout Repository
+    uses: actions/checkout@v3
+
+  - name: Setup Terraform
+    uses: hashicorp/setup-terraform@v3
+
+  - name: Terraform Init
+    run: terraform init
+
+  - name: Terraform Plan
+    run: terraform plan -var-file="../dev.tfvars"
+
+  - name: Terraform Apply
+    run: terraform apply -auto-approve -var-file="../dev.tfvars"
+name: Terraform Dev Deployment
 
 on:
   push:
@@ -9,34 +40,22 @@ jobs:
   terraform:
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: .github/environments/dev
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
-
-      - name: Azure Login
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
       - name: Terraform Init
         run: terraform init
-        working-directory: terraform
-
-      - name: Terraform Format
-        run: terraform fmt -check
-        working-directory: terraform
-
-      - name: Terraform Validate
-        run: terraform validate
-        working-directory: terraform
 
       - name: Terraform Plan
-        run: terraform plan
-        working-directory: terraform
+        run: terraform plan -var-file="dev.tfvars"
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve
-        working-directory: terraform
+        run: terraform apply -auto-approve -var-file="dev.tfvars"
