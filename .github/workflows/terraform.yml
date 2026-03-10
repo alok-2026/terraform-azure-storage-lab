@@ -1,37 +1,6 @@
 name: Terraform Dev Deployment
 
 on:
-push:
-branches:
-- main
-
-jobs:
-terraform:
-runs-on: ubuntu-latest
-
-```
-defaults:
-  run:
-    working-directory: .github/environments/dev
-
-steps:
-  - name: Checkout Repository
-    uses: actions/checkout@v3
-
-  - name: Setup Terraform
-    uses: hashicorp/setup-terraform@v3
-
-  - name: Terraform Init
-    run: terraform init
-
-  - name: Terraform Plan
-    run: terraform plan -var-file="../dev.tfvars"
-
-  - name: Terraform Apply
-    run: terraform apply -auto-approve -var-file="../dev.tfvars"
-name: Terraform Dev Deployment
-
-on:
   push:
     branches:
       - main
