@@ -43,3 +43,5 @@ resource "azurerm_subnet_network_security_group_association" "app_subnet_assoc" 
   subnet_id                 = azurerm_subnet.subnet_app.id
   network_security_group_id = azurerm_network_security_group.app_nsg.id
 }
+}
+# commit test 2
