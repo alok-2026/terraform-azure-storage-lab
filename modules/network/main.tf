@@ -25,7 +25,7 @@ resource "azurerm_network_security_group" "app_nsg" {
 }
 resource "azurerm_network_security_rule" "allow_https" {
   name                        = "Allow-HTTPS"
-  priority                    = 100
+  priority                    = 101
   direction                   = "Inbound"
   access                      = "Allow"
   protocol                    = "Tcp"
