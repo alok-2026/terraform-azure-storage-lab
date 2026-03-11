@@ -18,22 +18,29 @@ provider "azurerm" {
   features {}
 }
 
+# Create Resource Group first
 resource "azurerm_resource_group" "rg" {
   name     = var.resource_group_name
   location = var.location
 }
 
+# Deploy Network Module
 module "network" {
   source = "../modules/network"
 
   resource_group_name = azurerm_resource_group.rg.name
   location            = var.location
+
+  depends_on = [azurerm_resource_group.rg]
 }
 
+# Deploy Storage Account Module
 module "storage_account" {
   source = "../modules/storage-account"
 
-  resource_group_name   = azurerm_resource_group.rg.name
-  location              = var.location
-  storage_account_name  = var.storage_account_name
+  resource_group_name  = azurerm_resource_group.rg.name
+  location             = var.location
+  storage_account_name = var.storage_account_name
+
+  depends_on = [azurerm_resource_group.rg]
 }
