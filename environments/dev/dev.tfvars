@@ -1,4 +1,5 @@
 resource_group_name  = "rg-devops-storage-lab"
 location             = "Central India"
+vnet_name            = "dev-vnet"
 storage_account_name = "alokdevstorage123"
-container_name       = "devcontainer"
+container_name       = "tfstate"
