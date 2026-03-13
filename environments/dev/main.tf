@@ -1,32 +1,21 @@
-terraform {
-  required_providers {
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "~>4.0"
-    }
-  }
-
-  backend "azurerm" {
-    resource_group_name  = "rg-devops-storage-lab"
-    storage_account_name = "alokdevstorage123"
-    container_name       = "tfstate"
-    key                  = "dev.terraform.tfstate"
-  }
-}
-
 module "network" {
   source = "../../modules/network"
 
-  resource_group_name = var.resource_group_name
-  location            = var.location
-  vnet_name           = var.vnet_name
+  vnet_name           = "dev-vnet"
+  resource_group_name = "rg-devops-storage-lab"
+  location            = "Central India"
+
+  subnet_name   = "dev-subnet"
+  address_space = ["10.0.0.0/16"]
+  subnet_prefix = ["10.0.1.0/24"]
 }
 
 module "storage_account" {
   source = "../../modules/storage-account"
 
-  resource_group_name  = var.resource_group_name
-  location             = var.location
-  storage_account_name = var.storage_account_name
-  container_name       = var.container_name
+  storage_account_name = "alokdevstorage123"
+  resource_group_name  = "rg-devops-storage-lab"
+  location             = "Central India"
+
+  container_name = "dev-container"
 }
