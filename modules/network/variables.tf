@@ -1,14 +1,23 @@
 variable "vnet_name" {
-  description = "Virtual Network name"
-  type        = string
-}
-
-variable "location" {
-  description = "Azure region"
-  type        = string
+  type = string
 }
 
 variable "resource_group_name" {
-  description = "Resource group name"
-  type        = string
+  type = string
+}
+
+variable "location" {
+  type = string
+}
+
+variable "address_space" {
+  type = list(string)
+}
+
+variable "subnet_name" {
+  type = string
+}
+
+variable "subnet_prefix" {
+  type = list(string)
 }
