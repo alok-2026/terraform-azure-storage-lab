@@ -25,12 +25,12 @@ jobs:
         run: terraform fmt -check
         working-directory: environments/dev
 
-      - name: Terraform Validate
-        run: terraform validate
-        working-directory: environments/dev
-
       - name: Terraform Init
         run: terraform init
+        working-directory: environments/dev
+
+      - name: Terraform Validate
+        run: terraform validate
         working-directory: environments/dev
 
       - name: Terraform Plan
