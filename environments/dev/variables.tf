@@ -22,3 +22,6 @@ variable "container_name" {
   description = "Storage container name"
   type        = string
 }
+variable "tenant_id" {}
+
+variable "object_id" {}

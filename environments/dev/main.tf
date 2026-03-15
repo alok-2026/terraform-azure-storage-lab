@@ -19,3 +19,14 @@ module "storage_account" {
 
   container_name = "dev-container"
 }
+module "key_vault" {
+
+  source = "../../modules/key-vault"
+
+  key_vault_name      = "alokdev-keyvault"
+  location            = "Central India"
+  resource_group_name = "rg-devops-storage-lab"
+
+  tenant_id = var.tenant_id
+  object_id = var.object_id
+}
