@@ -37,3 +37,12 @@ variable "subnet_prefix" {
   description = "Subnet address prefix"
   type        = list(string)
 }
+variable "tenant_id" {
+  description = "Azure Tenant ID"
+  type        = string
+}
+
+variable "object_id" {
+  description = "Azure Object ID"
+  type        = string
+}
