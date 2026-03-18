@@ -7,10 +7,10 @@ terraform {
   }
 
   backend "azurerm" {
-    resource_group_name  = "rg-devops-storage-lab"
-    storage_account_name = "alokterraformstate"
+    resource_group_name  = "rg-terraform-backend"
+    storage_account_name = "tfstatealokbackend"
     container_name       = "tfstate"
-    key                  = "terraform.tfstate"
+    key                  = "dev.terraform.tfstate"
   }
 }
 
@@ -24,19 +24,27 @@ resource "azurerm_resource_group" "rg" {
   location = var.location
 }
 
-# Deploy Network Module
+# Network Module
 module "network" {
   source = "../modules/network"
 
   resource_group_name = azurerm_resource_group.rg.name
   location            = var.location
+
+  vnet_name      = var.vnet_name
+  address_space  = var.address_space
+  subnet_name    = var.subnet_name
+  subnet_prefix  = var.subnet_prefix
 }
 
-# Deploy Storage Account Module
+# Storage Account Module
 module "storage_account" {
   source = "../modules/storage-account"
 
-  resource_group_name  = azurerm_resource_group.rg.name
-  location             = var.location
-  storage_account_name = var.storage_account_name
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = var.location
+
+  storage_account_name       = var.storage_account_name
+  container_name             = var.container_name
+  private_endpoint_subnet_id = module.network.subnet_id
 }
